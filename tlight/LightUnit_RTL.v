@@ -29,6 +29,11 @@ module LightUnit_RTL
   output logic [1:0] state
 );
 
+  `ECE2300_UNUSED(clk);
+  `ECE2300_UNUSED(rst);
+  `ECE2300_UNUSED(done);
+  `ECE2300_FLOATING(state);
+
   //''' SECTION ASSIGNMENT '''''''''''''''''''''''''''''''''''''''''''''''
   // Implement the control FSM for the LightUnit
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''

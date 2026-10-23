@@ -28,6 +28,15 @@ module TrafficLightController_RTL
   // Instantiate the light and timer units as separate modules
   //>'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+  `ECE2300_UNUSED(clk);
+  `ECE2300_UNUSED(rst);
+  `ECE2300_FLOATING(ew_red);
+  `ECE2300_FLOATING(ew_yellow);
+  `ECE2300_FLOATING(ew_green);
+  `ECE2300_FLOATING(ns_red);
+  `ECE2300_FLOATING(ns_yellow);
+  `ECE2300_FLOATING(ns_green);
+
 endmodule
 
 `endif /* TRAFFIC_LIGHT_CONTROLLER_RTL_V */
