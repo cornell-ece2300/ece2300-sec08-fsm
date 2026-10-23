@@ -5,6 +5,7 @@
 `ifndef TRAFFIC_LIGHT_CONTROLLER_RTL_V
 `define TRAFFIC_LIGHT_CONTROLLER_RTL_V
 
+`include "ece2300/ece2300-misc.v"
 `include "tlight/TimerUnit_RTL.v"
 `include "tlight/LightUnit_RTL.v"
 

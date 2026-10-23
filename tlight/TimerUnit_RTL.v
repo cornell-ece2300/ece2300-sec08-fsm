@@ -46,7 +46,7 @@ module TimerUnit_RTL
   // Next-State Combinational Logic
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement the next-state combinational logic using a single
-  // always_comb block with a single casez statement. Do not use any
+  // always_comb block with a single case statement. Do not use any
   // additional assign statements. Do not include any logic that sets the
   // outputs.
 
