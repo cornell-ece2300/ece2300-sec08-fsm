@@ -50,7 +50,10 @@ module Top();
 
   integer c;
   string  ew_str;
-  string  ns_str;
+  string  west_str;
+  string  ns_red_str;
+  string  ns_yellow_str;
+  string  ns_green_str;
 
   initial begin
 
@@ -75,31 +78,51 @@ module Top();
 
     for ( int cycles = 0; cycles < 100; cycles = cycles+1 ) begin
 
-      // Traffic light strings (ANSI colors, reset after each character)
+      // Traffic light strings in red/yellow/green order (ANSI colors)
 
       case ( {ew_red,ew_yellow,ew_green} )
-        { 1'b0, 1'b0, 1'b1 } : ew_str = "\x1b[32mG\x1b[0m";
-        { 1'b0, 1'b1, 1'b0 } : ew_str = "\x1b[33mY\x1b[0m";
-        { 1'b1, 1'b0, 1'b0 } : ew_str = "\x1b[31mR\x1b[0m";
-        default : ew_str = "?";
+        { 1'b0, 1'b0, 1'b1 } : ew_str = "○ ○ \x1b[32m●\x1b[0m";
+        { 1'b0, 1'b1, 1'b0 } : ew_str = "○ \x1b[33m●\x1b[0m ○";
+        { 1'b1, 1'b0, 1'b0 } : ew_str = "\x1b[31m●\x1b[0m ○ ○";
+        default : ew_str = "???";
       endcase
 
+      // West lamps run green/yellow/red, with red on the right.
+
+      case ( {ew_red,ew_yellow,ew_green} )
+        { 1'b0, 1'b0, 1'b1 } : west_str = "\x1b[32m●\x1b[0m ○ ○";
+        { 1'b0, 1'b1, 1'b0 } : west_str = "○ \x1b[33m●\x1b[0m ○";
+        { 1'b1, 1'b0, 1'b0 } : west_str = "○ ○ \x1b[31m●\x1b[0m";
+        default : west_str = "???";
+      endcase
+
+      // North/south lamps are stacked; north has red at the bottom.
+
+      ns_red_str    = "○";
+      ns_yellow_str = "○";
+      ns_green_str  = "○";
+
       case ( {ns_red,ns_yellow,ns_green} )
-        { 1'b0, 1'b0, 1'b1 } : ns_str = "\x1b[32mG\x1b[0m";
-        { 1'b0, 1'b1, 1'b0 } : ns_str = "\x1b[33mY\x1b[0m";
-        { 1'b1, 1'b0, 1'b0 } : ns_str = "\x1b[31mR\x1b[0m";
-        default : ns_str = "?";
+        { 1'b0, 1'b0, 1'b1 } : ns_green_str  = "\x1b[32m●\x1b[0m";
+        { 1'b0, 1'b1, 1'b0 } : ns_yellow_str = "\x1b[33m●\x1b[0m";
+        { 1'b1, 1'b0, 1'b0 } : ns_red_str    = "\x1b[31m●\x1b[0m";
+        default : begin
+          ns_red_str    = "?";
+          ns_yellow_str = "?";
+          ns_green_str  = "?";
+        end
       endcase
 
       // Display output
 
+      $display("");
       $display("                |     :     |                ");
       $display("                |     :     |                ");
       $display("                |     :     |                ");
       $display("                |     :     |                ");
-      $display("                |     :     |                ");
-      $display("                |     :     |                ");
-      $display("              %s |   N :     | %s          ",ns_str,ew_str);
+      $display("              %s |     :     |                ",ns_green_str);
+      $display("              %s |     :     |                ",ns_yellow_str);
+      $display("              %s |   N :     | %s        ",ns_red_str,ew_str);
       $display(" ---------------'           '--------------- ");
       $display("                                             ");
       $display("                             E               ");
@@ -107,13 +130,14 @@ module Top();
       $display("               W                             ");
       $display("                                             ");
       $display(" ---------------.           .--------------- ");
-      $display("              %s |     : S   | %s              ",ew_str,ns_str);
+      $display("          %s |     : S   | %s              ",west_str,ns_red_str);
+      $display("                |     :     | %s              ",ns_yellow_str);
+      $display("                |     :     | %s              ",ns_green_str);
       $display("                |     :     |                ");
       $display("                |     :     |                ");
       $display("                |     :     |                ");
       $display("                |     :     |                ");
-      $display("                |     :     |                ");
-      $display("                |     :     |                ");
+      $display("");
 
       // Advance time
 
@@ -130,7 +154,7 @@ module Top();
 
       // Redraw the console
 
-      for ( int i = 0; i < 24; i++ ) begin
+      for ( int i = 0; i < 26; i++ ) begin
         $write("\x1b[A");
       end
 
