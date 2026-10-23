@@ -1,0 +1,116 @@
+rulesets:
+  GL:
+    - forbid-special-blocks
+    - forbid-always-comb
+    - forbid-always-ff
+    - restrict-assign-rhs
+    - restrict-gate-primitives
+    - forbid-module-instantiation
+    - restrict-port-connections
+           
+  GL_Struct:
+    - forbid-special-blocks
+    - forbid-always-comb
+    - forbid-always-ff
+    - restrict-assign-rhs
+    - restrict-gate-primitives
+    - restrict-port-connections
+
+  GL_Struct_No_Gates:
+    - forbid-special-blocks
+    - forbid-always-comb
+    - forbid-always-ff
+    - restrict-assign-rhs
+    - forbid-gate-primitives
+    - restrict-port-connections
+
+  RTL_No_Always:
+    - forbid-special-blocks
+    - forbid-always-comb
+    - forbid-always-ff
+    - forbid-module-instantiation
+    - forbid-gate-primitives
+    - forbid-logic-initialization
+    - forbid-nested-ternary
+    - forbid-one-bit-literal-ternary
+
+  RTL_Sequential:
+    - if-missing-final-else
+    - final-else-x-only
+    - if-x-assignment
+    - forbid-nested-if-statements
+    - forbid-generic-always
+    - always-ff-non-blocking
+    - forbid-async-reset
+    - forbid-always-comb
+    - forbid-negedge
+    - forbid-special-blocks
+    - forbid-gate-primitives
+    - forbid-logic-initialization
+    - forbid-nested-ternary
+    - forbid-one-bit-literal-ternary
+    - forbid-module-instantiation
+
+  RTL_Combinational:
+    - forbid-always-comb
+    - forbid-always-ff
+    - forbid-generic-always
+    - forbid-special-blocks
+    - forbid-gate-primitives
+    - forbid-if-statements
+    - forbid-logic-initialization
+    - forbid-nested-ternary
+    - forbid-one-bit-literal-ternary
+    - forbid-module-instantiation-except-registers
+
+  RTL_Always_Comb_Case:
+    - case-missing-default
+    - default-case-x-only
+    - default-case-signal-coverage
+    - only-case-in-always-comb
+    - forbid-always-ff
+    - forbid-generic-always
+    - always-comb-blocking
+    - forbid-special-blocks
+    - forbid-gate-primitives
+    - forbid-if-statements
+    - forbid-logic-initialization
+    - forbid-ternary
+    - forbid-module-instantiation
+
+  RTL_Control:
+    - case-missing-default
+    - default-case-x-only
+    - default-case-signal-coverage
+    - only-case-in-always-comb
+    - forbid-always-ff
+    - forbid-generic-always
+    - always-comb-blocking
+    - restrict-port-connections
+    - forbid-if-statements
+    - forbid-logic-initialization
+    - forbid-nested-ternary
+    - forbid-one-bit-literal-ternary
+    - forbid-gate-primitives
+    - forbid-module-instantiation-except-registers
+
+  RTL_Struct:
+    - forbid-always-ff
+    - forbid-always-comb
+    - forbid-special-blocks
+    - restrict-port-connections
+    - forbid-logic-initialization
+    - restrict-assign-rhs
+    - forbid-gate-primitives
+
+  RTL_Struct_With_Gates:
+    - forbid-always-ff
+    - forbid-always-comb
+    - forbid-special-blocks
+    - restrict-port-connections
+    - forbid-logic-initialization
+    - restrict-assign-rhs
+    - restrict-gate-primitives
+
+files:
+  tlight/TrafficLightController_RTL.v: RTL_Struct
