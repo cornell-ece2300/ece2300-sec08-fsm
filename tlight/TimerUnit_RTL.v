@@ -36,21 +36,6 @@ module TimerUnit_RTL
   // instantiate a Register_2b_RTL for your sequential logic. You should
   // not need to instantiate any other modules.
 
-  //>*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  logic [1:0] state_next;
-
-  Register_2b_RTL state_reg
-  (
-    .clk (clk),
-    .rst (rst),
-    .en  (1'b1),
-    .d   (state_next),
-    .q   (state)
-  );
-
-  //<*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
   //''' SECTION 2 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Next-State Combinational Logic
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -59,44 +44,12 @@ module TimerUnit_RTL
   // additional assign statements. Do not include any logic that sets the
   // outputs.
 
-  //>*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  // Next-state combinational logic
-
-  always_comb begin
-    casez ( { state, go } )
-      // state go
-      {  S0,   1'b0 } : state_next = S0;
-      {  S0,   1'b1 } : state_next = S1;
-      {  S1,   1'b? } : state_next = S2;
-      {  S2,   1'b? } : state_next = S3;
-      {  S3,   1'b? } : state_next = S0;
-      default: state_next = 'x;
-    endcase
-  end
-
-  //<*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
   //''' SECTION 3 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Output Combinational Logic
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement the output combinational logic using a single always_comb
   // block with a single case statement. Do not use any additional assign
   // statements. Do not include any logic that sets the next state.
-
-  //>*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  always_comb begin
-    case ( state )
-      S0 : done = 0;
-      S1 : done = 0;
-      S2 : done = 0;
-      S3 : done = 1;
-      default : done = 'x;
-    endcase
-  end
-
-  //<*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 endmodule
 

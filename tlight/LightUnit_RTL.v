@@ -49,21 +49,6 @@ module LightUnit_RTL
   // instantiate a Register_2b_RTL for your sequential logic. You should
   // not need to instantiate any other modules.
 
-  //>*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  logic [1:0] state_next;
-
-  Register_2b_RTL state_reg
-  (
-    .clk (clk),
-    .rst (rst),
-    .en  (1'b1),
-    .d   (state_next),
-    .q   (state)
-  );
-
-  //<*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
   //''' SECTION 2 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Next-State Combinational Logic
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -71,25 +56,6 @@ module LightUnit_RTL
   // always_comb block with a single casez statement. Do not use any
   // additional assign statements. Do not include any logic that sets the
   // outputs.
-
-  //>*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  // Next-state combinational logic
-
-  always_comb begin
-    casez ( { state, done } )
-      // state done
-      {  EWG,  1'b0 } : state_next = EWG;
-      {  EWG,  1'b1 } : state_next = EWY;
-      {  EWY,  1'b? } : state_next = NSG;
-      {  NSG,  1'b0 } : state_next = NSG;
-      {  NSG,  1'b1 } : state_next = NSY;
-      {  NSY,  1'b? } : state_next = EWG;
-      default: state_next = 'x;
-    endcase
-  end
-
-  //<*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
   //''' SECTION 3 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Output Combinational Logic
@@ -118,22 +84,6 @@ module LightUnit_RTL
     ns_yellow = ns_yellow_;
     ns_green  = ns_green_;
   endtask
-
-  //>*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
-  always_comb begin
-    case ( state )
-      //                     -east/west- north/south
-      //                 go  red yel gre red yel gre
-      EWG : set_outputs( 1,  0,  0,  1,  1,  0,  0  );
-      EWY : set_outputs( 0,  0,  1,  0,  1,  0,  0  );
-      NSG : set_outputs( 1,  1,  0,  0,  0,  0,  1  );
-      NSY : set_outputs( 0,  1,  0,  0,  0,  1,  0  );
-      default : set_outputs( 'x, 'x, 'x, 'x, 'x, 'x, 'x );
-    endcase
-  end
-
-  //<*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 endmodule
 
